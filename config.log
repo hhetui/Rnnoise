@@ -27,9 +27,9 @@ uname -v = #1 SMP Tue Jul 4 15:04:05 UTC 2017
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
 
-PATH: /usr/local/cuda/bin
 PATH: /data/asr/wangxingkun/envs/py37/bin
 PATH: /data/asr/anaconda3/condabin
+PATH: /usr/local/cuda/bin
 PATH: /usr/local/cuda/bin
 PATH: /usr/lib64/qt-3.3/bin
 PATH: /usr/local/bin
@@ -529,6 +529,7 @@ config.status:1105: creating rnnoise.pc
 config.status:1105: creating rnnoise-uninstalled.pc
 config.status:1105: creating doc/Doxyfile
 config.status:1105: creating config.h
+config.status:1286: config.h is unchanged
 config.status:1334: executing depfiles commands
 config.status:1334: executing libtool commands
 configure:14683:
