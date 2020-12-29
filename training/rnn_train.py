@@ -1,4 +1,4 @@
-#!/usr/bin/python
+
 
 from __future__ import print_function
 
@@ -20,7 +20,10 @@ import h5py
 from keras.constraints import Constraint
 from keras import backend as K
 import numpy as np
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
 
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 #import tensorflow as tf
 #from keras.backend.tensorflow_backend import set_session
 #config = tf.ConfigProto()
@@ -79,10 +82,10 @@ model.compile(loss=[mycost, my_crossentropy],
               optimizer='adam', loss_weights=[10, 0.5])
 
 
-batch_size = 32
+batch_size = 256
 
 print('Loading data...')
-with h5py.File('training.h5', 'r') as hf:
+with h5py.File('/netdisk1/wangxingkun/training.h5', 'r') as hf:
     all_data = hf['data'][:]
 print('done.')
 
@@ -107,7 +110,7 @@ all_data = 0;
 #y_train = y_train.astype('float32')
 
 print(len(x_train), 'train sequences. x shape =', x_train.shape, 'y shape = ', y_train.shape)
-
+#print(K.tensorflow_backend._get_available_gpus())
 print('Train...')
 model.fit(x_train, [y_train, vad_train],
           batch_size=batch_size,

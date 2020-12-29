@@ -15,3 +15,6 @@ PCM files sampled at 48 kHz. It can be used as:
 ./examples/rnnoise_demo <number of channels> <maximum attenuation> < input.raw > output.raw
 
 The output is also a 16-bit raw PCM file.
+
+原作者版本号：90ec41e
+
