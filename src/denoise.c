@@ -572,7 +572,7 @@ int main(int argc, char **argv) {
   f1 = fopen(argv[1], "r");
   f2 = fopen(argv[2], "r");
   maxCount = atoi(argv[3]);
-  //???????循环是干嘛 貌似是为了消除噪声前面的部分静音，先读取一部分 但是没有使用
+  //作者为了去掉前面的静音片段
   for(i=0;i<150;i++) {
     short tmp[FRAME_SIZE];
     fread(tmp, sizeof(short), FRAME_SIZE, f2);
