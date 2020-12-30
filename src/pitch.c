@@ -149,11 +149,11 @@ void pitch_downsample(celt_sig *x[], opus_val16 *x_lp,
       int len, int C)
 {
    int i;
-   opus_val32 ac[5];
-   opus_val16 tmp=Q15ONE;
-   opus_val16 lpc[4], mem[5]={0,0,0,0,0};
-   opus_val16 lpc2[5];
-   opus_val16 c1 = QCONST16(.8f,15);
+   opus_val32 ac[5]; //长度5 的float 数组
+   opus_val16 tmp=Q15ONE;  // 1.0f
+   opus_val16 lpc[4], mem[5]={0,0,0,0,0}; //lpc 是长为4的float数组 mem 是长为5的 0 数组
+   opus_val16 lpc2[5]; //长为5的float数组
+   opus_val16 c1 = QCONST16(.8f,15); // 宏定义为 #QCONST16(x,bits) (x)    不知道有啥用
 #ifdef FIXED_POINT
    int shift;
    opus_val32 maxabs = celt_maxabs32(x[0], len);
@@ -203,8 +203,8 @@ void pitch_downsample(celt_sig *x[], opus_val16 *x_lp,
    _celt_lpc(lpc, ac, 4);
    for (i=0;i<4;i++)
    {
-      tmp = MULT16_16_Q15(QCONST16(.9f,15), tmp);
-      lpc[i] = MULT16_16_Q15(lpc[i], tmp);
+      tmp = MULT16_16_Q15(QCONST16(.9f,15), tmp);//tmp从 1 每次乘 0.9
+      lpc[i] = MULT16_16_Q15(lpc[i], tmp); //lpc[i] * tmp
    }
    /* Add a zero */
    lpc2[0] = lpc[0] + QCONST16(.8f,SIG_SHIFT);
@@ -214,6 +214,11 @@ void pitch_downsample(celt_sig *x[], opus_val16 *x_lp,
    lpc2[4] = MULT16_16_Q15(c1,lpc[3]);
    celt_fir5(x_lp, lpc2, x_lp, len>>1, mem);
 }
+
+
+
+
+
 
 void celt_pitch_xcorr(const opus_val16 *_x, const opus_val16 *_y,
       opus_val32 *xcorr, int len, int max_pitch)
