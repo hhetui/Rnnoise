@@ -11,4 +11,4 @@
 
 (4) python rnn_train.py
 
-(5) ./dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_data.h（目前把原作者的输出扔给另一个不需要的文件，如需改动模型结构需要重新保存rnn_data.h文件）
+(5) ./dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_pram.h（目前把原作者的输出扔给另一个不需要的文件，如需改动模型结构需要重新保存rnn_data.h文件）

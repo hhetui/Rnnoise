@@ -245,7 +245,7 @@ AUTOMAKE = ${SHELL} /data/asr/wangxingkun/rnnoise/missing automake-1.13
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -I/usr/local/cuda//include -I/usr/local/cuda//include  -pedantic -Wall -Wextra -Wno-sign-compare -Wno-parentheses -Wno-long-long -fvisibility=hidden
+CFLAGS = -I/usr/local/cuda//include  -pedantic -Wall -Wextra -Wno-sign-compare -Wno-parentheses -Wno-long-long -fvisibility=hidden
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
