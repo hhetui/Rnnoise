@@ -23,7 +23,7 @@ import numpy as np
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="7"
 #import tensorflow as tf
 #from keras.backend.tensorflow_backend import set_session
 #config = tf.ConfigProto()
@@ -63,7 +63,7 @@ reg = 0.000001
 constraint = WeightClip(0.499)
 
 print('Build model...')
-main_input = Input(shape=(None, 42), name='main_input')
+main_input = Input(shape=(None, 34), name='main_input')
 tmp = Dense(24, activation='tanh', name='input_dense', kernel_constraint=constraint, bias_constraint=constraint)(main_input)
 vad_gru = GRU(24, activation='tanh', recurrent_activation='sigmoid', return_sequences=True, name='vad_gru', kernel_regularizer=regularizers.l2(reg), recurrent_regularizer=regularizers.l2(reg), kernel_constraint=constraint, recurrent_constraint=constraint, bias_constraint=constraint)(tmp)
 vad_output = Dense(1, activation='sigmoid', name='vad_output', kernel_constraint=constraint, bias_constraint=constraint)(vad_gru)
@@ -73,7 +73,7 @@ denoise_input = keras.layers.concatenate([vad_gru, noise_gru, main_input])
 
 denoise_gru = GRU(96, activation='tanh', recurrent_activation='sigmoid', return_sequences=True, name='denoise_gru', kernel_regularizer=regularizers.l2(reg), recurrent_regularizer=regularizers.l2(reg), kernel_constraint=constraint, recurrent_constraint=constraint, bias_constraint=constraint)(denoise_input)
 
-denoise_output = Dense(22, activation='sigmoid', name='denoise_output', kernel_constraint=constraint, bias_constraint=constraint)(denoise_gru)
+denoise_output = Dense(14, activation='sigmoid', name='denoise_output', kernel_constraint=constraint, bias_constraint=constraint)(denoise_gru)
 
 model = Model(inputs=main_input, outputs=[denoise_output, vad_output])
 
@@ -82,10 +82,10 @@ model.compile(loss=[mycost, my_crossentropy],
               optimizer='adam', loss_weights=[10, 0.5])
 
 
-batch_size = 256
+batch_size = 32
 
 print('Loading data...')
-with h5py.File('/netdisk1/wangxingkun/training.h5', 'r') as hf:
+with h5py.File('/netdisk1/wangxingkun/training_8_author_100min.h5', 'r') as hf:
     all_data = hf['data'][:]
 print('done.')
 
@@ -93,16 +93,16 @@ window_size = 2000
 
 nb_sequences = len(all_data)//window_size
 print(nb_sequences, ' sequences')
-x_train = all_data[:nb_sequences*window_size, :42]
-x_train = np.reshape(x_train, (nb_sequences, window_size, 42))
+x_train = all_data[:nb_sequences*window_size, :34]
+x_train = np.reshape(x_train, (nb_sequences, window_size, 34))
 
-y_train = np.copy(all_data[:nb_sequences*window_size, 42:64])
-y_train = np.reshape(y_train, (nb_sequences, window_size, 22))
+y_train = np.copy(all_data[:nb_sequences*window_size, 34:48])
+y_train = np.reshape(y_train, (nb_sequences, window_size, 14))
 
-noise_train = np.copy(all_data[:nb_sequences*window_size, 64:86])
-noise_train = np.reshape(noise_train, (nb_sequences, window_size, 22))
+noise_train = np.copy(all_data[:nb_sequences*window_size, 48:62])
+noise_train = np.reshape(noise_train, (nb_sequences, window_size, 14))
 
-vad_train = np.copy(all_data[:nb_sequences*window_size, 86:87])
+vad_train = np.copy(all_data[:nb_sequences*window_size, 62:63])
 vad_train = np.reshape(vad_train, (nb_sequences, window_size, 1))
 
 all_data = 0;
@@ -116,4 +116,4 @@ model.fit(x_train, [y_train, vad_train],
           batch_size=batch_size,
           epochs=120,
           validation_split=0.1)
-model.save("weights.hdf5")
+model.save("weights_ver9.hdf5")

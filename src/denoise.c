@@ -42,7 +42,7 @@
 #include "rnn_data.h"
 
 #define FRAME_SIZE_SHIFT 2
-#define FRAME_SIZE (120<<FRAME_SIZE_SHIFT) //480
+#define FRAME_SIZE (20<<FRAME_SIZE_SHIFT) //480
 #define WINDOW_SIZE (2*FRAME_SIZE)  //960
 #define FREQ_SIZE (FRAME_SIZE + 1)  //481
 
@@ -53,7 +53,7 @@
 
 #define SQUARE(x) ((x)*(x))
 
-#define NB_BANDS 22
+#define NB_BANDS 14
 
 #define CEPS_MEM 8
 #define NB_DELTA_CEPS 6
@@ -613,7 +613,7 @@ int main(int argc, char **argv) {
     float vad=0;
     float E=0;
     if (count==maxCount) break;
-    if ((count%1000)==0) fprintf(stderr, "%d\r", count);
+    if ((count%10000)==0) fprintf(stderr, "%d\r", count);
 
 
     //每2821轮随机生成场景参数

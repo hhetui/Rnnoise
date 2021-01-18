@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include "rnnoise.h"
 
-#define FRAME_SIZE 480
+#define FRAME_SIZE 80
 
 int main(int argc, char **argv) {
   int i;
