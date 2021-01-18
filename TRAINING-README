@@ -2,13 +2,13 @@
     ./compile.sh
 
 (2) ./denoise_training signal.raw noise.raw count > training.f32
-   （EX: ./denoise_training /netdisk1/wangxingkun/big_s_48.pcm /netdisk1/wangxingkun/big_n_48.pcm 100000000 > /netdisk1/wangxingkun/training.f32）
-
+   （EX: ./denoise_training /netdisk1/wangxingkun/big_s_48.pcm /netdisk1/wangxingkun/big_n_48.pcm 500000 > /netdisk1/wangxingkun/training.f32）
+    (运行完会提示生成了500000 x 63 的数据矩阵，其中63是8k版本对应的特征纬度，原48k版本是87)
 
 (3) cd training 
-    python bin2hdf5.py ../src/training.f32 count 87 training.h5
-   （EX: python bin2hdf5.py /netdisk1/wangxingkun/training.f32 100000000 87 /netdisk1/wangxingkun/training.h5）
+    python bin2hdf5.py ../src/training.f32 count 63 training.h5
+   （EX: python bin2hdf5.py /netdisk1/wangxingkun/training.f32 500000 63 /netdisk1/wangxingkun/training.h5）
 
 (4) python rnn_train.py
 
-(5) ./dump_rnn.py weights.hdf5 ../src/rnn_data.c ../src/rnn_pram.h（目前把原作者的输出扔给另一个不需要的文件，如需改动模型结构需要重新保存rnn_data.h文件）
+(5) ./dump_rnn.py weights.hdf5 （目前把原作者的输出扔给另一个不需要的文件，如需改动模型结构需要重新保存rnn_data.h文件，因为保存的文件是固定不变的，所以直接放入了脚本内部，参数只需要weights文件）

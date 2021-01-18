@@ -1,10 +1,14 @@
-RNNoise is a noise suppression library based on a recurrent neural network.
+此分支为适配8k采样率的版本
 
-To compile, just type:
+编译流程：
 % ./autogen.sh
 % ./configure
 % make
 
+训练指引参照wiki https://wiki.zuoyebang.cc/display/search/Rnnoise  或者TRAINING-README
+
+
+作者提示:
 Optionally:
 % make install
 
