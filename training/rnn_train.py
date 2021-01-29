@@ -23,7 +23,7 @@ import numpy as np
 import os
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="7"
 #import tensorflow as tf
 #from keras.backend.tensorflow_backend import set_session
 #config = tf.ConfigProto()
@@ -82,10 +82,10 @@ model.compile(loss=[mycost, my_crossentropy],
               optimizer='adam', loss_weights=[10, 0.5])
 
 
-batch_size = 256
+batch_size = 32
 
 print('Loading data...')
-with h5py.File('/netdisk1/wangxingkun/training.h5', 'r') as hf:
+with h5py.File('/netdisk1/wangxingkun/author_xianchang_48.h5', 'r') as hf:
     all_data = hf['data'][:]
 print('done.')
 
@@ -116,4 +116,4 @@ model.fit(x_train, [y_train, vad_train],
           batch_size=batch_size,
           epochs=120,
           validation_split=0.1)
-model.save("weights.hdf5")
+model.save("weights_ver10.hdf5")
